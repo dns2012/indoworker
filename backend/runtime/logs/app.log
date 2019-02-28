@@ -31721,3 +31721,104 @@ $_SERVER = [
     'REQUEST_TIME_FLOAT' => 1551291482.807
     'REQUEST_TIME' => 1551291482
 ]
+2019-02-28 09:18:42 [::1][5][0b81ebc9a480d38e9d4ed9cfe98c85ba][error][yii\db\Exception] PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'user_admin.first_name' in 'field list' in /Applications/XAMPP/xamppfiles/htdocs/indoworker/vendor/yiisoft/yii2/db/Command.php:1258
+Stack trace:
+#0 /Applications/XAMPP/xamppfiles/htdocs/indoworker/vendor/yiisoft/yii2/db/Command.php(1258): PDOStatement->execute()
+#1 /Applications/XAMPP/xamppfiles/htdocs/indoworker/vendor/yiisoft/yii2/db/Command.php(1148): yii\db\Command->internalExecute('SELECT `job_pos...')
+#2 /Applications/XAMPP/xamppfiles/htdocs/indoworker/vendor/yiisoft/yii2/db/Command.php(399): yii\db\Command->queryInternal('fetchAll', NULL)
+#3 /Applications/XAMPP/xamppfiles/htdocs/indoworker/vendor/yiisoft/yii2/db/Query.php(237): yii\db\Command->queryAll()
+#4 /Applications/XAMPP/xamppfiles/htdocs/indoworker/backend/controllers/BioUnreadController.php(27): yii\db\Query->all()
+#5 [internal function]: backend\controllers\BioUnreadController->actionIndex('2')
+#6 /Applications/XAMPP/xamppfiles/htdocs/indoworker/vendor/yiisoft/yii2/base/InlineAction.php(57): call_user_func_array(Array, Array)
+#7 /Applications/XAMPP/xamppfiles/htdocs/indoworker/vendor/yiisoft/yii2/base/Controller.php(157): yii\base\InlineAction->runWithParams(Array)
+#8 /Applications/XAMPP/xamppfiles/htdocs/indoworker/vendor/yiisoft/yii2/base/Module.php(528): yii\base\Controller->runAction('', Array)
+#9 /Applications/XAMPP/xamppfiles/htdocs/indoworker/vendor/yiisoft/yii2/web/Application.php(103): yii\base\Module->runAction('bio-unread', Array)
+#10 /Applications/XAMPP/xamppfiles/htdocs/indoworker/vendor/yiisoft/yii2/base/Application.php(386): yii\web\Application->handleRequest(Object(yii\web\Request))
+#11 /Applications/XAMPP/xamppfiles/htdocs/indoworker/backend/web/index.php(17): yii\base\Application->run()
+#12 {main}
+
+Next yii\db\Exception: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'user_admin.first_name' in 'field list'
+The SQL being executed was: SELECT `job_post_activity`.`apply_date`, `applicant`.`name`, `applicant`.`phone`, `job_post_activity`.`job_priority`, `applicant`.`address`, `job_post_activity`.`id`, `user_admin`.`first_name`, `user_admin`.`last_name` FROM `job_post_activity` INNER JOIN `applicant` ON applicant.user_account_id = job_post_activity.user_account_id WHERE (`job_post_activity`.`job_post_id`='2') AND (`job_post_activity`.`step`=0) in /Applications/XAMPP/xamppfiles/htdocs/indoworker/vendor/yiisoft/yii2/db/Schema.php:664
+Stack trace:
+#0 /Applications/XAMPP/xamppfiles/htdocs/indoworker/vendor/yiisoft/yii2/db/Command.php(1263): yii\db\Schema->convertException(Object(PDOException), 'SELECT `job_pos...')
+#1 /Applications/XAMPP/xamppfiles/htdocs/indoworker/vendor/yiisoft/yii2/db/Command.php(1148): yii\db\Command->internalExecute('SELECT `job_pos...')
+#2 /Applications/XAMPP/xamppfiles/htdocs/indoworker/vendor/yiisoft/yii2/db/Command.php(399): yii\db\Command->queryInternal('fetchAll', NULL)
+#3 /Applications/XAMPP/xamppfiles/htdocs/indoworker/vendor/yiisoft/yii2/db/Query.php(237): yii\db\Command->queryAll()
+#4 /Applications/XAMPP/xamppfiles/htdocs/indoworker/backend/controllers/BioUnreadController.php(27): yii\db\Query->all()
+#5 [internal function]: backend\controllers\BioUnreadController->actionIndex('2')
+#6 /Applications/XAMPP/xamppfiles/htdocs/indoworker/vendor/yiisoft/yii2/base/InlineAction.php(57): call_user_func_array(Array, Array)
+#7 /Applications/XAMPP/xamppfiles/htdocs/indoworker/vendor/yiisoft/yii2/base/Controller.php(157): yii\base\InlineAction->runWithParams(Array)
+#8 /Applications/XAMPP/xamppfiles/htdocs/indoworker/vendor/yiisoft/yii2/base/Module.php(528): yii\base\Controller->runAction('', Array)
+#9 /Applications/XAMPP/xamppfiles/htdocs/indoworker/vendor/yiisoft/yii2/web/Application.php(103): yii\base\Module->runAction('bio-unread', Array)
+#10 /Applications/XAMPP/xamppfiles/htdocs/indoworker/vendor/yiisoft/yii2/base/Application.php(386): yii\web\Application->handleRequest(Object(yii\web\Request))
+#11 /Applications/XAMPP/xamppfiles/htdocs/indoworker/backend/web/index.php(17): yii\base\Application->run()
+#12 {main}
+Additional Information:
+Array
+(
+    [0] => 42S22
+    [1] => 1054
+    [2] => Unknown column 'user_admin.first_name' in 'field list'
+)
+
+2019-02-28 09:18:41 [::1][5][0b81ebc9a480d38e9d4ed9cfe98c85ba][info][application] $_GET = [
+    'id' => '2'
+]
+
+$_POST = []
+
+$_FILES = []
+
+$_COOKIE = [
+    '_ga' => 'GA1.1.1863149371.1543907808'
+    '__tawkuuid' => 'e::localhost::3bX G4wGz0vR2R2Pegt1ONbX8ptLLnb5OadGNi0S/TuLvR2azwqErijGd4Z0myBi::2'
+    '_identity-backend' => 'e4c37f2a5b156ccfaf09882f5c4f3fb086a643a0200d1043e2d73c547189b6aca:2:{i:0;s:17:\"_identity-backend\";i:1;s:46:\"[5,\"zdgJve3TPyIBjH6Jt9x-UXyV9QJV4KcR\",2592000]\";}'
+    'adminer_version' => '0'
+    'ci_session' => '4fd1df93791ed000e0652a4fe86ab548a67abc48'
+    'advanced-backend' => '0b81ebc9a480d38e9d4ed9cfe98c85ba'
+    '_csrf-backend' => '8bc4146449f214875307b5cc5607aebe13fb970f7381ca7bc8e3278df57a719ba:2:{i:0;s:13:\"_csrf-backend\";i:1;s:32:\"Tq1UfqtzTMwOnbmFvUXYOKSslINXdwtn\";}'
+]
+
+$_SESSION = [
+    '__flash' => []
+    '__id' => 5
+]
+
+$_SERVER = [
+    'UNIQUE_ID' => 'XHeZYJOpIEuYMjweYAhigAAAAAw'
+    'HTTP_HOST' => 'localhost'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'HTTP_UPGRADE_INSECURE_REQUESTS' => '1'
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/72.0.3626.119 Safari/537.36'
+    'HTTP_ACCEPT' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8'
+    'HTTP_REFERER' => 'http://localhost/indoworker/backend/web/index.php/bio-unread?id=3'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate, br'
+    'HTTP_ACCEPT_LANGUAGE' => 'en-US,en;q=0.9'
+    'HTTP_COOKIE' => '_ga=GA1.1.1863149371.1543907808; __tawkuuid=e::localhost::3bX+G4wGz0vR2R2Pegt1ONbX8ptLLnb5OadGNi0S/TuLvR2azwqErijGd4Z0myBi::2; _identity-backend=e4c37f2a5b156ccfaf09882f5c4f3fb086a643a0200d1043e2d73c547189b6aca%3A2%3A%7Bi%3A0%3Bs%3A17%3A%22_identity-backend%22%3Bi%3A1%3Bs%3A46%3A%22%5B5%2C%22zdgJve3TPyIBjH6Jt9x-UXyV9QJV4KcR%22%2C2592000%5D%22%3B%7D; adminer_version=0; ci_session=4fd1df93791ed000e0652a4fe86ab548a67abc48; advanced-backend=0b81ebc9a480d38e9d4ed9cfe98c85ba; _csrf-backend=8bc4146449f214875307b5cc5607aebe13fb970f7381ca7bc8e3278df57a719ba%3A2%3A%7Bi%3A0%3Bs%3A13%3A%22_csrf-backend%22%3Bi%3A1%3Bs%3A32%3A%22Tq1UfqtzTMwOnbmFvUXYOKSslINXdwtn%22%3B%7D'
+    'PATH' => '/usr/bin:/bin:/usr/sbin:/sbin'
+    'DYLD_LIBRARY_PATH' => '/Applications/XAMPP/xamppfiles/lib'
+    'SERVER_SIGNATURE' => ''
+    'SERVER_SOFTWARE' => 'Apache/2.4.34 (Unix) OpenSSL/1.0.2p PHP/7.2.10 mod_perl/2.0.8-dev Perl/v5.16.3'
+    'SERVER_NAME' => 'localhost'
+    'SERVER_ADDR' => '::1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '::1'
+    'DOCUMENT_ROOT' => '/Applications/XAMPP/xamppfiles/htdocs'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => '/Applications/XAMPP/xamppfiles/htdocs'
+    'SERVER_ADMIN' => 'you@example.com'
+    'SCRIPT_FILENAME' => '/Applications/XAMPP/xamppfiles/htdocs/indoworker/backend/web/index.php'
+    'REMOTE_PORT' => '51523'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'GET'
+    'QUERY_STRING' => 'id=2'
+    'REQUEST_URI' => '/indoworker/backend/web/index.php/bio-unread?id=2'
+    'SCRIPT_NAME' => '/indoworker/backend/web/index.php'
+    'PATH_INFO' => '/bio-unread'
+    'PATH_TRANSLATED' => '/Applications/XAMPP/xamppfiles/htdocs/bio-unread'
+    'PHP_SELF' => '/indoworker/backend/web/index.php/bio-unread'
+    'REQUEST_TIME_FLOAT' => 1551341920.983
+    'REQUEST_TIME' => 1551341920
+]

@@ -23,7 +23,6 @@ $this->params['breadcrumbs'][] = $this->title;
           <th>HP/WA</th>
           <th>Priority</th>
           <th>Kota</th>
-          <th>Admin By</th>
           <th class="action-column">&nbsp;</th>
         </tr>
       </thead>
@@ -36,7 +35,6 @@ $this->params['breadcrumbs'][] = $this->title;
             <td><?= $data['phone']?></td>
             <td><?= $model->labelPriority($data['job_priority'])?></td>
             <td><?= $data['address']?></td>
-            <td><?= (!empty($data['first_name']))?$data['first_name'].' '.$data['last_name']:""?></td>
             <td>
               <button type="button" class="btn btn-xs btn-danger" data-toggle="modal" data-target="#modalReject<?=$index+1?>">REJECT</button>
               <button type="button" class="btn btn-xs btn-success" data-toggle="modal" data-target="#modalAccept<?=$index+1?>">ACCEPT</button>

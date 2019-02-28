@@ -18,11 +18,11 @@ class BioUnreadController extends Controller
     $dataJobPostActivity =  (new \yii\db\Query())
                             ->select(['job_post_activity.apply_date', 'applicant.name',
                             'applicant.phone', 'job_post_activity.job_priority', 'applicant.address',
-                            'job_post_activity.id', 'user_admin.first_name', 'user_admin.last_name'])
+                            'job_post_activity.id'])
                             ->from('job_post_activity')
                             ->join('INNER JOIN', 'applicant', 'applicant.user_account_id = job_post_activity.user_account_id')
-                            ->join('LEFT JOIN', 'user_admin', 'user_admin.id = job_post_activity.admin_by')
-                            ->where(['job_post_activity.job_post_id'  =>  $id])
+                            ->join('INNER JOIN', 'job_post', 'job_post.job_post_id = job_post_activity.job_post_id')
+                            ->where(['job_post.job_type_id'  =>  $id])
                             ->andWhere(['job_post_activity.step' => 0])
                             ->all();
     $dataJobType         =  (new \yii\db\Query())
@@ -48,6 +48,7 @@ class BioUnreadController extends Controller
   function actionReject($id=0,$menu=0) {
     $model = JobPostActivity::findOne($id);
     $model->status_read = 1;
+    $model->step = 1;
     $model->reject = 1;
     $model->admin_by = Yii::$app->user->identity->id;
     $model->save();
