@@ -3,13 +3,30 @@ use yii\helpers\Html;
 
 use backend\models\JobType;
 
+// Get List Job Type
 $listJobType = (new \yii\db\Query())
                 ->select(['job_type_id','job_description'])
                 ->from('job_type')
                 ->all();
 $menuJobType = [];
 foreach($listJobType as $listJobType) {
-  $menuJobType[] = ['label' => $listJobType['job_description'], 'icon' => '', 'url' => ['/bio-unread?id='.$listJobType['job_type_id']],];
+  $menuJobType[] = $listJobType['job_type_id'].'-'.$listJobType['job_description'];
+}
+$countMenuJobType = count($menuJobType);
+
+// Get Admin Menu Access
+if(!empty(Yii::$app->user->identity->id)) {
+  $listMenuAccess = (new \yii\db\Query())
+                    ->select(['menu_id'])
+                    ->from('admin_access')
+                    ->where(['role_id' =>  Yii::$app->user->identity->role])
+                    ->all();
+  $menuAccess     = [];
+  foreach($listMenuAccess as $listMenuAccess) {
+    $menuAccess[] = $listMenuAccess['menu_id'];
+  }
+} else {
+  $menuAccess     = [];
 }
 
 /* @var $this \yii\web\View */
@@ -58,13 +75,21 @@ if (Yii::$app->controller->action->id === 'login') {
 
         <?= $this->render(
             'left.php',
-            ['directoryAsset' => $directoryAsset, 'menuJobType' =>  $menuJobType]
+            [
+              'directoryAsset' => $directoryAsset,
+              'menuJobType' =>  $menuJobType,
+              'countMenuJobType' => $countMenuJobType,
+              'menuAccess'  =>  $menuAccess
+            ]
         )
         ?>
 
         <?= $this->render(
             'content.php',
-            ['content' => $content, 'directoryAsset' => $directoryAsset]
+            [
+              'content' => $content,
+              'directoryAsset' => $directoryAsset,
+            ]
         ) ?>
 
     </div>

@@ -6,12 +6,42 @@ use Yii;
 use yii\web\Controller;
 use backend\models\JobPostActivity;
 use backend\models\JobType;
+use yii\filters\AccessControl;
+use yii\filters\VerbFilter;
 
 /**
  *
  */
 class BioUnreadController extends Controller
 {
+
+  /**
+   * {@inheritdoc}
+   */
+  public function behaviors()
+  {
+      return [
+          'allow' =>[
+            'class'=>AccessControl::className(),
+            'only'=>['create','update','delete','view','index'],
+            'rules'=>[
+                  [
+                    'allow'=>true,
+                    'roles'=>['@']
+                  ],
+              ],
+            ],
+
+          'verbs' => [
+              'class' => VerbFilter::className(),
+              'actions' => [
+                  'delete' => ['POST'],
+              ],
+          ],
+      ];
+
+  }
+
   function actionIndex($id=0) {
     $model = new JobPostActivity;
     // Get Data Job Post Activity

@@ -48,12 +48,32 @@ class JobsPostController extends Controller
      */
     public function actionIndex()
     {
+        $controller = Yii::$app->controller->id;
+        if(!empty(Yii::$app->controller->actionParams['id'])) {
+          $param_id = Yii::$app->controller->actionParams['id'];
+          $request_now = $controller."?id=".$param_id;
+          $listPrivilege = (new \yii\db\Query())
+                            ->select(['*'])
+                            ->from('admin_privilege')
+                            ->where(['role_id' => Yii::$app->user->identity->role])
+                            ->andWhere(['menu_id' => $request_now])
+                            ->one();
+        } else {
+          $listPrivilege = (new \yii\db\Query())
+                            ->select(['*'])
+                            ->from('admin_privilege')
+                            ->where(['role_id'  =>  Yii::$app->user->identity->role])
+                            ->andWhere(['menu_id' => $controller])
+                            ->one();
+        }
+        $privilege = explode(',', $listPrivilege['privilege']);
         $dataProvider = new ActiveDataProvider([
             'query' => JobPost::find(),
         ]);
 
         return $this->render('index', [
             'dataProvider' => $dataProvider,
+            'privilege' =>  $privilege
         ]);
     }
 
