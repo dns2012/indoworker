@@ -107,7 +107,15 @@ if (Yii::$app->controller->action->id === 'login') {
       } else {
         $("input:checkbox").removeAttr('checked');
       }
+    })
 
+    $('[name="menu[]"]').click(function() {
+      let val = $(this).val();
+      if($(this).prop('checked')) {
+        $("."+val).attr('checked', 'checked');
+      } else {
+        $("."+val).removeAttr('checked');
+      }
     })
   })
 </script>
