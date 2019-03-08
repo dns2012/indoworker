@@ -15,8 +15,8 @@ use yii\widgets\ActiveForm;
 
 
     <?= $form->field($model, 'job_description')->textarea(['rows' => 6]) ?>
-    <?= $form->field($model, 'group_type')->radio(['label'=>'CareGiver', 'value'=>'CareGiver', 'uncheck'=>null])?>
-    <?= $form->field($model, 'group_type')->radio(['label'=>'Non CareGiver/Industri', 'value'=>'Non CareGiver/Industri', 'uncheck'=>null])?>
+    <?= $form->field($model, 'group_type')->radio(['label'=>'Formal', 'value'=>'Formal', 'uncheck'=>null])?>
+    <?= $form->field($model, 'group_type')->radio(['label'=>'inFormal', 'value'=>'inFormal', 'uncheck'=>null])?>
     <?= $form->field($model, 'min_edu')->textInput() ?>
     <?= $form->field($model, 'age_min')->textInput() ?>
     <?= $form->field($model, 'age_max')->textInput() ?>

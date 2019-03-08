@@ -43,7 +43,6 @@ class AdminPrivilegeController extends Controller
   }
 
   function actionIndex($role=0) {
-    $array = array('news' => 'read,insert', 'transaction' =>  'update,delete');
     $listMenu = (new \yii\db\Query())
                 ->select(['menu_id'])
                 ->from('admin_access')
@@ -68,10 +67,21 @@ class AdminPrivilegeController extends Controller
         }
       }
     }
+    $listJobType = (new \yii\db\Query())
+                    ->select(['job_type_id','job_description'])
+                    ->from('job_type')
+                    ->all();
+    $jobType = [];
+    foreach($listJobType as $listJobType) {
+      $jobType[] = $listJobType['job_type_id'].'-'.$listJobType['job_description'];
+    }
+    $countJobType = count($jobType);
     return $this->render('index', [
       'menu'  =>  $menu,
       'privilege' => $privilege,
-      'role'  =>  $role
+      'role'  =>  $role,
+      'job_type' =>  $jobType,
+      'count_job_type'  =>  $countJobType
     ]);
   }
 

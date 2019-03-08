@@ -14,6 +14,11 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="bio-unread-index">
     <h1><?= $jobType['job_description']?></h1>
+    <?php
+      if(!in_array('reject',$privilege)) {$reject = "style='display:none'";} else {$reject = "";}
+      if(!in_array('accept',$privilege)) {$accept = "style='display:none'";} else {$accept = "";}
+      if(!in_array('acceptojt',$privilege)) {$acceptojt = "style='display:none'";} else {$acceptojt = "";}
+    ?>
     <table class="table table-striped table-bordered">
       <thead>
         <tr>
@@ -36,9 +41,9 @@ $this->params['breadcrumbs'][] = $this->title;
             <td><?= $model->labelPriority($data['job_priority'])?></td>
             <td><?= $data['address']?></td>
             <td>
-              <button type="button" class="btn btn-xs btn-danger" data-toggle="modal" data-target="#modalReject<?=$index+1?>">REJECT</button>
-              <button type="button" class="btn btn-xs btn-success" data-toggle="modal" data-target="#modalAccept<?=$index+1?>">ACCEPT</button>
-              <button type="button" class="btn btn-xs btn-info" data-toggle="modal" data-target="#modalAcceptOJT<?=$index+1?>">ACCEPT OTHER JOB TYPE</button>
+              <button type="button" class="btn btn-xs btn-danger" data-toggle="modal" data-target="#modalReject<?=$index+1?>" <?=$reject?>>REJECT</button>
+              <button type="button" class="btn btn-xs btn-success" data-toggle="modal" data-target="#modalAccept<?=$index+1?>" <?=$accept?>>ACCEPT</button>
+              <button type="button" class="btn btn-xs btn-info" data-toggle="modal" data-target="#modalAcceptOJT<?=$index+1?>" <?=$acceptojt?>>ACCEPT OTHER JOB TYPE</button>
             </td>
           </tr>
           <div id="modalReject<?=$index+1?>" class="modal fade" role="dialog">

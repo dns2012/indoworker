@@ -44,6 +44,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'is_active',
             'is_available',
             'premium_job',
+            'soon_require',
             'for_gender',
             'created_date',
             'created_by',

@@ -51,10 +51,12 @@ use backend\models\UserAdmin;
         ,'style'=>'margin-bottom:4px;', 'id'=>'is_available']) ?>
       <?= $form->field($model, 'premium_job')->checkBox(['label' => 'Premium Job','data-size'=>'small', 'class'=>'bs_switch'
           ,'style'=>'margin-bottom:4px;', 'id'=>'premium_job']) ?>
+      <?= $form->field($model, 'soon_require')->checkBox(['label' => 'Urgent Job','data-size'=>'small', 'class'=>'bs_switch'
+              ,'style'=>'margin-bottom:4px;', 'id'=>'soon_require']) ?>
 
-          <?= $form->field($model, 'for_gender')->radio(['label'=>'For Male', 'value'=>'for-male', 'uncheck'=>null])?>
-          <?= $form->field($model, 'for_gender')->radio(['label'=>'For Female', 'value'=>'for-female', 'uncheck'=>null])?>
-          <?= $form->field($model, 'for_gender')->radio(['label'=>'For Male & Female', 'value'=>'for-male-female', 'uncheck'=>null])?>
+      <?= $form->field($model, 'for_gender')->radio(['label'=>'For Male', 'value'=>'for-male', 'uncheck'=>null])?>
+      <?= $form->field($model, 'for_gender')->radio(['label'=>'For Female', 'value'=>'for-female', 'uncheck'=>null])?>
+      <?= $form->field($model, 'for_gender')->radio(['label'=>'For Male & Female', 'value'=>'for-male-female', 'uncheck'=>null])?>
 
     <div class="form-group">
         <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>

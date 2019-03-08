@@ -99,3 +99,15 @@ if (Yii::$app->controller->action->id === 'login') {
     </html>
     <?php $this->endPage() ?>
 <?php } ?>
+<script>
+  jQuery(document).ready(function($) {
+    $("#checkall").click(function() {
+      if($(this).prop('checked')) {
+        $("input:checkbox").attr('checked', 'checked');
+      } else {
+        $("input:checkbox").removeAttr('checked');
+      }
+
+    })
+  })
+</script>

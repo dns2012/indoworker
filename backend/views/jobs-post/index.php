@@ -1,4 +1,5 @@
 <?php
+
 use yii\helpers\Html;
 /* use yii\grid\GridView; */
 use kartik\grid\GridView;
@@ -10,7 +11,9 @@ $this->title = 'Job Posts';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="job-post-index">
+
     <h1><?= Html::encode($this->title) ?></h1>
+
     <p>
       <?php if(in_array('insert',$privilege)) { ?>
         <?= Html::a('Create Job Post', ['create'], ['class' => 'btn btn-success']) ?>
@@ -36,6 +39,7 @@ $this->params['breadcrumbs'][] = $this->title;
           'is_active',
           'is_available',
           'created_date',
+          // $model->getCreatedBy($data['created_by']),
           //'created_by',
           ['class' => 'yii\grid\ActionColumn', 'template' => ''.$control.''],
         ],

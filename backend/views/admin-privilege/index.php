@@ -15,6 +15,9 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="bio-unread-index">
   <div class="row">
     <div class="col-md-12">
+      <input type="checkbox" name="" value="" id="checkall" value="1"> CHECK ALL
+    </div>
+    <div class="col-md-12">
       <?php ActiveForm::begin(['method'  =>  'post','action'  =>  Url::to(['admin-privilege/add?role='.$role])]);?>
         <table class="table table-bordered">
           <thead>
@@ -89,6 +92,20 @@ $this->params['breadcrumbs'][] = $this->title;
                       <td><input type="checkbox" name="country[]" value="delete" <?=(!empty($privilege['country']))?(in_array('delete',$privilege['country']))?"checked":"":""?>></td>
                     </tr>
                     <tr>
+                      <td><input type="checkbox" name="submenu[]" value="education" <?=(!empty($menu))?(in_array('education',$menu))?"checked":"":""?>> Education</td>
+                      <td><input type="checkbox" name="education[]" value="insert" <?=(!empty($privilege['education']))?(in_array('insert',$privilege['education']))?"checked":"":""?>></td>
+                      <td><input type="checkbox" name="education[]" value="view" <?=(!empty($privilege['education']))?(in_array('view',$privilege['education']))?"checked":"":""?>></td>
+                      <td><input type="checkbox" name="education[]" value="update" <?=(!empty($privilege['education']))?(in_array('update',$privilege['education']))?"checked":"":""?>></td>
+                      <td><input type="checkbox" name="education[]" value="delete" <?=(!empty($privilege['education']))?(in_array('delete',$privilege['education']))?"checked":"":""?>></td>
+                    </tr>
+                    <tr>
+                      <td><input type="checkbox" name="submenu[]" value="religion" <?=(!empty($menu))?(in_array('religion',$menu))?"checked":"":""?>> Religion</td>
+                      <td><input type="checkbox" name="religion[]" value="insert" <?=(!empty($privilege['religion']))?(in_array('insert',$privilege['religion']))?"checked":"":""?>></td>
+                      <td><input type="checkbox" name="religion[]" value="view" <?=(!empty($privilege['religion']))?(in_array('view',$privilege['religion']))?"checked":"":""?>></td>
+                      <td><input type="checkbox" name="religion[]" value="update" <?=(!empty($privilege['religion']))?(in_array('update',$privilege['religion']))?"checked":"":""?>></td>
+                      <td><input type="checkbox" name="religion[]" value="delete" <?=(!empty($privilege['religion']))?(in_array('delete',$privilege['religion']))?"checked":"":""?>></td>
+                    </tr>
+                    <tr>
                       <td><input type="checkbox" name="submenu[]" value="job-type" <?=(!empty($menu))?(in_array('job-type',$menu))?"checked":"":""?>> Job Type</td>
                       <td><input type="checkbox" name="job-type[]" value="insert" <?=(!empty($privilege['job-type']))?(in_array('insert',$privilege['job-type']))?"checked":"":""?>></td>
                       <td><input type="checkbox" name="job-type[]" value="view" <?=(!empty($privilege['job-type']))?(in_array('view',$privilege['job-type']))?"checked":"":""?>></td>
@@ -130,6 +147,141 @@ $this->params['breadcrumbs'][] = $this->title;
                       <td><input type="checkbox" name="faq[]" value="update" <?=(!empty($privilege['faq']))?(in_array('update',$privilege['faq']))?"checked":"":""?>></td>
                       <td><input type="checkbox" name="faq[]" value="delete" <?=(!empty($privilege['faq']))?(in_array('delete',$privilege['faq']))?"checked":"":""?>></td>
                     </tr>
+                  </tbody>
+                </table>
+              </td>
+            </tr>
+
+            <!-- Bio Unread Menu  -->
+            <tr>
+              <td>3</td>
+              <td>
+                <input type="checkbox" name="menu[]" value="bio-unread" <?=(!empty($menu))?(in_array('bio-unread',$menu))?"checked":"":""?>> Bio Unread
+              </td>
+              <td>
+                <table class="table table-bordered">
+                  <thead>
+                    <th>Menu</th>
+                    <th>Reject</th>
+                    <th>Accept</th>
+                    <th>Accept Other Job Type</th>
+                  </thead>
+                  <tbody>
+                    <?php for($jt=0;$jt<$count_job_type;$jt++) {
+                      $exjt = explode('-', $job_type[$jt]);
+                      $valjt = "bio-unread?id=".$exjt[0];
+                    ?>
+                    <tr>
+                      <td><input type="checkbox" name="submenu[]" value="<?=$valjt?>" <?=(!empty($menu))?(in_array($valjt,$menu))?"checked":"":""?>> <?=$exjt[1]?></td>
+                      <td><input type="checkbox" name="<?=$valjt?>[]" value="reject" <?=(!empty($privilege[$valjt]))?(in_array('reject',$privilege[$valjt]))?"checked":"":""?>></td>
+                      <td><input type="checkbox" name="<?=$valjt?>[]" value="accept" <?=(!empty($privilege[$valjt]))?(in_array('accept',$privilege[$valjt]))?"checked":"":""?>></td>
+                      <td><input type="checkbox" name="<?=$valjt?>[]" value="acceptojt" <?=(!empty($privilege[$valjt]))?(in_array('acceptojt',$privilege[$valjt]))?"checked":"":""?>></td>
+                    </tr>
+                    <?php ;} ?>
+                  </tbody>
+                </table>
+              </td>
+            </tr>
+
+            <!-- Bio Reject Menu  -->
+            <tr>
+              <td>4</td>
+              <td>
+                <input type="checkbox" name="menu[]" value="bio-rejected" <?=(!empty($menu))?(in_array('bio-rejected',$menu))?"checked":"":""?>> Rejected
+              </td>
+              <td>
+                <table class="table table-bordered">
+                  <thead>
+                    <th>Menu</th>
+                  </thead>
+                  <tbody>
+                    <?php for($jt=0;$jt<$count_job_type;$jt++) {
+                      $exjt = explode('-', $job_type[$jt]);
+                      $valjt = "bio-rejected?id=".$exjt[0];
+                    ?>
+                    <tr>
+                      <td><input type="checkbox" name="submenu[]" value="<?=$valjt?>" <?=(!empty($menu))?(in_array($valjt,$menu))?"checked":"":""?>> <?=$exjt[1]?></td>
+                    </tr>
+                    <?php ;} ?>
+                  </tbody>
+                </table>
+              </td>
+            </tr>
+
+            <!-- Bio Job Confirmed Menu  -->
+            <tr>
+              <td>5</td>
+              <td>
+                <input type="checkbox" name="menu[]" value="bio-job-confirmed" <?=(!empty($menu))?(in_array('bio-job-confirmed',$menu))?"checked":"":""?>> Job
+              </td>
+              <td>
+                <table class="table table-bordered">
+                  <thead>
+                    <th>Menu</th>
+                    <th>Move to Trash</th>
+                  </thead>
+                  <tbody>
+                    <?php for($jt=0;$jt<$count_job_type;$jt++) {
+                      $exjt = explode('-', $job_type[$jt]);
+                      $valjt = "bio-job-confirmed?id=".$exjt[0];
+                    ?>
+                    <tr>
+                      <td><input type="checkbox" name="submenu[]" value="<?=$valjt?>" <?=(!empty($menu))?(in_array($valjt,$menu))?"checked":"":""?>> <?=$exjt[1]?></td>
+                      <td><input type="checkbox" name="<?=$valjt?>[]" value="movetotrash" <?=(!empty($privilege[$valjt]))?(in_array('movetotrash',$privilege[$valjt]))?"checked":"":""?>></td>
+                    </tr>
+                    <?php ;} ?>
+                  </tbody>
+                </table>
+              </td>
+            </tr>
+
+            <!-- Bio Trash Menu  -->
+            <tr>
+              <td>6</td>
+              <td>
+                <input type="checkbox" name="menu[]" value="bio-trash" <?=(!empty($menu))?(in_array('bio-trash',$menu))?"checked":"":""?>> Trash
+              </td>
+              <td>
+                <table class="table table-bordered">
+                  <thead>
+                    <th>Menu</th>
+                    <th>Recall</th>
+                  </thead>
+                  <tbody>
+                    <?php for($jt=0;$jt<$count_job_type;$jt++) {
+                      $exjt = explode('-', $job_type[$jt]);
+                      $valjt = "bio-trash?id=".$exjt[0];
+                    ?>
+                    <tr>
+                      <td><input type="checkbox" name="submenu[]" value="<?=$valjt?>" <?=(!empty($menu))?(in_array($valjt,$menu))?"checked":"":""?>> <?=$exjt[1]?></td>
+                      <td><input type="checkbox" name="<?=$valjt?>[]" value="recall" <?=(!empty($privilege[$valjt]))?(in_array('recall',$privilege[$valjt]))?"checked":"":""?>></td>
+                    </tr>
+                    <?php ;} ?>
+                  </tbody>
+                </table>
+              </td>
+            </tr>
+
+            <!-- Bio Recall Menu  -->
+            <tr>
+              <td>7</td>
+              <td>
+                <input type="checkbox" name="menu[]" value="bio-recall" <?=(!empty($menu))?(in_array('bio-recall',$menu))?"checked":"":""?>> Recall
+              </td>
+              <td>
+                <table class="table table-bordered">
+                  <thead>
+                    <th>Menu</th>
+                  </thead>
+                  <tbody>
+                    <?php for($jt=0;$jt<$count_job_type;$jt++) {
+                      $exjt = explode('-', $job_type[$jt]);
+                      $valjt = "bio-recall?id=".$exjt[0];
+                    ?>
+                    <tr>
+                      <td><input type="checkbox" name="submenu[]" value="<?=$valjt?>" <?=(!empty($menu))?(in_array($valjt,$menu))?"checked":"":""?>> <?=$exjt[1]?></td>
+                    </tr>
+                    <?php ;} ?>
                   </tbody>
                 </table>
               </td>

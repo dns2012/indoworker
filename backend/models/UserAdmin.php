@@ -21,7 +21,7 @@ use Yii;
  * @property int $created_at
  * @property int $updated_at
  *
- * @property JobPost[] $jobPosts
+ * @property AdminRole $role0
  */
 class UserAdmin extends \yii\db\ActiveRecord
 {
@@ -40,11 +40,11 @@ class UserAdmin extends \yii\db\ActiveRecord
     {
         return [
             [['role', 'status', 'created_at', 'updated_at'], 'integer'],
-            [['status'], 'required'],
+            [['first_name', 'username', 'password', 'email', 'role'], 'required'],
             [['first_name', 'last_name'], 'string', 'max' => 100],
-            [['username'], 'string', 'max' => 255],
+            [['username', 'password_hash', 'password', 'password_reset_token', 'email'], 'string', 'max' => 255],
             [['auth_key'], 'string', 'max' => 32],
-            [['password_hash', 'password', 'password_reset_token', 'email'], 'string', 'max' => 255],
+            [['role'], 'exist', 'skipOnError' => true, 'targetClass' => AdminRole::className(), 'targetAttribute' => ['role' => 'id']],
         ];
     }
 
@@ -67,14 +67,19 @@ class UserAdmin extends \yii\db\ActiveRecord
             'status' => 'Status',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
+            'roleName'  =>  'Role'
         ];
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getJobPosts()
+    public function getRole0()
     {
-        return $this->hasMany(JobPost::className(), ['created_by' => 'id']);
+        return $this->hasOne(AdminRole::className(), ['id' => 'role']);
+    }
+
+    public function getRoleName() {
+      return $this->role0->name;
     }
 }

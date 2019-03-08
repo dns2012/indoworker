@@ -10,6 +10,8 @@ use Yii;
  * @property int $id
  * @property string $name
  * @property string $description
+ *
+ * @property UserAdmin[] $userAdmins
  */
 class AdminRole extends \yii\db\ActiveRecord
 {
@@ -43,5 +45,13 @@ class AdminRole extends \yii\db\ActiveRecord
             'name' => 'Name',
             'description' => 'Description',
         ];
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getUserAdmins()
+    {
+        return $this->hasMany(UserAdmin::className(), ['role' => 'id']);
     }
 }
