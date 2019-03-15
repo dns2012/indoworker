@@ -43,18 +43,66 @@ class BioUnreadController extends Controller
   }
 
   function actionIndex($id=0) {
-    $model = new JobPostActivity;
+    if(!empty(Yii::$app->controller->actionParams['id'])) {
+      $controller = Yii::$app->controller->id;
+      $param_id = Yii::$app->controller->actionParams['id'];
+      $request_now = $controller."?id=".$param_id;
+      $listPrivilege = (new \yii\db\Query())
+                        ->select(['*'])
+                        ->from('admin_privilege')
+                        ->where(['role_id' => Yii::$app->user->identity->role])
+                        ->andWhere(['menu_id' => $request_now])
+                        ->one();
+      $access = (new \yii\db\Query())
+                ->select(['*'])
+                ->from('admin_access')
+                ->where(['role_id' => Yii::$app->user->identity->role])
+                ->andWhere(['menu_id' => $request_now])
+                ->one();
+      $country = $access['country'];
+    }
+    $privilege = explode(',', $listPrivilege['privilege']);
     // Get Data Job Post Activity
-    $dataJobPostActivity =  (new \yii\db\Query())
-                            ->select(['job_post_activity.apply_date', 'applicant.name',
-                            'applicant.phone', 'job_post_activity.job_priority', 'applicant.address',
-                            'job_post_activity.id'])
-                            ->from('job_post_activity')
-                            ->join('INNER JOIN', 'applicant', 'applicant.user_account_id = job_post_activity.user_account_id')
-                            ->join('INNER JOIN', 'job_post', 'job_post.job_post_id = job_post_activity.job_post_id')
-                            ->where(['job_post.job_type_id'  =>  $id])
-                            ->andWhere(['job_post_activity.step' => 0])
-                            ->all();
+    $model = new JobPostActivity;
+    if(!empty($country)) {
+      if($country != 'ALL') {
+        $dataJobPostActivity =  (new \yii\db\Query())
+                                ->select(['job_post_activity.apply_date', 'applicant.name',
+                                'applicant.phone', 'job_post_activity.job_priority', 'applicant.address',
+                                'job_post_activity.id'])
+                                ->from('job_post_activity')
+                                ->join('INNER JOIN', 'applicant', 'applicant.user_account_id = job_post_activity.user_account_id')
+                                ->join('INNER JOIN', 'job_post', 'job_post.job_post_id = job_post_activity.job_post_id')
+                                ->join('INNER JOIN', 'job_location', 'job_location.job_location_id = job_post.job_location_id')
+                                ->where(['job_post.job_type_id'  =>  $id])
+                                ->andWhere(['job_post_activity.step' => 0])
+                                ->andWhere(['job_location.country_id' => $country])
+                                ->all();
+      } else {
+        $dataJobPostActivity =  (new \yii\db\Query())
+                                ->select(['job_post_activity.apply_date', 'applicant.name',
+                                'applicant.phone', 'job_post_activity.job_priority', 'applicant.address',
+                                'job_post_activity.id'])
+                                ->from('job_post_activity')
+                                ->join('INNER JOIN', 'applicant', 'applicant.user_account_id = job_post_activity.user_account_id')
+                                ->join('INNER JOIN', 'job_post', 'job_post.job_post_id = job_post_activity.job_post_id')
+                                ->where(['job_post.job_type_id'  =>  $id])
+                                ->andWhere(['job_post_activity.step' => 0])
+                                ->all();
+      }
+    } else {
+      $dataJobPostActivity =  (new \yii\db\Query())
+                              ->select(['job_post_activity.apply_date', 'applicant.name',
+                              'applicant.phone', 'job_post_activity.job_priority', 'applicant.address',
+                              'job_post_activity.id'])
+                              ->from('job_post_activity')
+                              ->join('INNER JOIN', 'applicant', 'applicant.user_account_id = job_post_activity.user_account_id')
+                              ->join('INNER JOIN', 'job_post', 'job_post.job_post_id = job_post_activity.job_post_id')
+                              ->where(['job_post.job_type_id'  =>  $id])
+                              ->andWhere(['job_post_activity.step' => 0])
+                              ->all();
+    }
+
     $dataJobType         =  (new \yii\db\Query())
                             ->select(['job_description', 'job_type_id'])
                             ->from('job_type')
@@ -66,26 +114,6 @@ class BioUnreadController extends Controller
                             ->where(['!=', 'job_type_id', $id])
                             ->all();
     $countOJT = count($otherJobType);
-
-    $controller = Yii::$app->controller->id;
-    if(!empty(Yii::$app->controller->actionParams['id'])) {
-      $param_id = Yii::$app->controller->actionParams['id'];
-      $request_now = $controller."?id=".$param_id;
-      $listPrivilege = (new \yii\db\Query())
-                        ->select(['*'])
-                        ->from('admin_privilege')
-                        ->where(['role_id' => Yii::$app->user->identity->role])
-                        ->andWhere(['menu_id' => $request_now])
-                        ->one();
-    } else {
-      $listPrivilege = (new \yii\db\Query())
-                        ->select(['*'])
-                        ->from('admin_privilege')
-                        ->where(['role_id'  =>  Yii::$app->user->identity->role])
-                        ->andWhere(['menu_id' => $controller])
-                        ->one();
-    }
-    $privilege = explode(',', $listPrivilege['privilege']);
     return $this->render('index', [
       "model" =>  $model,
       "dataJobPostActivity" =>  $dataJobPostActivity,

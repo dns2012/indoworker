@@ -4,10 +4,13 @@ namespace backend\controllers;
 
 use Yii;
 use backend\models\AdminRole;
+use backend\models\AdminAccess;
+use backend\models\AdminPrivilege;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\filters\AccessControl;
 
 /**
  * AdminRoleController implements the CRUD actions for AdminRole model.
@@ -17,17 +20,28 @@ class AdminRoleController extends Controller
     /**
      * {@inheritdoc}
      */
-    public function behaviors()
-    {
-        return [
-            'verbs' => [
-                'class' => VerbFilter::className(),
-                'actions' => [
-                    'delete' => ['POST'],
-                ],
-            ],
-        ];
-    }
+     public function behaviors()
+     {
+         return [
+           'allow' => [
+             'class'=>AccessControl::className(),
+             'only'=>['create','update','delete','view','index'],
+             'rules'=>[
+               [
+                 'allow'=>true,
+                 'roles'=>['@'],
+               ],
+             ],
+           ],
+
+             'verbs' => [
+                 'class' => VerbFilter::className(),
+                 'actions' => [
+                     'delete' => ['POST'],
+                 ],
+             ],
+         ];
+     }
 
     /**
      * Lists all AdminRole models.
@@ -105,6 +119,8 @@ class AdminRoleController extends Controller
     public function actionDelete($id)
     {
         $this->findModel($id)->delete();
+        AdminAccess::deleteAll(['role_id' =>  $id]);
+        AdminPrivilege::deleteAll(['role_id' =>  $id]);
 
         return $this->redirect(['index']);
     }

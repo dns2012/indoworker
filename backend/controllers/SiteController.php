@@ -65,11 +65,19 @@ class SiteController extends Controller
     {
         if (isset(Yii::$app->user->identity->id))
         {
-            return $this->render('index');
+          return $this->redirect(['home']);
         }else {
           return $this->redirect(['login']);
         }
-        //return $this->redirect(['/currency/index']);
+    }
+
+    public function actionHome() {
+      if (isset(Yii::$app->user->identity->id))
+      {
+        return $this->render('index');
+      }else {
+        return $this->redirect(['login']);
+      }
     }
 
     /**

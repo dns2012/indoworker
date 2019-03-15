@@ -43,20 +43,27 @@ class AdminPrivilegeController extends Controller
   }
 
   function actionIndex($role=0) {
+    $rolename = (new \yii\db\Query())
+                ->select(['name'])
+                ->from('admin_role')
+                ->where(['id' => $role])
+                ->one();
     $listMenu = (new \yii\db\Query())
-                ->select(['menu_id'])
+                ->select(['menu_id', 'country'])
                 ->from('admin_access')
                 ->where(['role_id' => $role])
                 ->all();
     $menu = [];
     $privilege = [];
+    $pricountry = [];
     foreach($listMenu as $listMenu) {
       $menu[] = $listMenu['menu_id'];
+      $pricountry[$listMenu['menu_id']] = $listMenu['country'];
       $listPrivilege = (new \yii\db\Query())
                         ->select(['privilege'])
                         ->from('admin_privilege')
                         ->where(['role_id' => $role])
-                        ->where(['menu_id' => $listMenu['menu_id']])
+                        ->andWhere(['menu_id' => $listMenu['menu_id']])
                         ->all();
       if(!empty($listPrivilege)) {
         foreach($listPrivilege as $listPrivilege) {
@@ -76,12 +83,25 @@ class AdminPrivilegeController extends Controller
       $jobType[] = $listJobType['job_type_id'].'-'.$listJobType['job_description'];
     }
     $countJobType = count($jobType);
+    $listCountry = (new \yii\db\Query())
+                    ->select(['country_id','description'])
+                    ->from('country')
+                    ->all();
+    $country = [];
+    foreach($listCountry as $listCountry) {
+      $country[] = $listCountry['country_id'].'-'.$listCountry['description'];
+    }
+    $countCountry = count($country);
     return $this->render('index', [
       'menu'  =>  $menu,
       'privilege' => $privilege,
+      'pricountry' => $pricountry,
       'role'  =>  $role,
+      'rolename' => $rolename,
       'job_type' =>  $jobType,
-      'count_job_type'  =>  $countJobType
+      'count_job_type'  =>  $countJobType,
+      'country' =>  $country,
+      'count_country' =>  $countCountry
     ]);
   }
 
@@ -108,6 +128,10 @@ class AdminPrivilegeController extends Controller
         $modelAccess = new AdminAccess;
         $modelAccess->role_id = $role;
         $modelAccess->menu_id = $submenu[$i];
+        $country = $request->post('country-'.$submenu[$i]);
+        if(!empty($country)) {
+          $modelAccess->country = $country;
+        }
         $modelAccess->save();
         $action = $request->post($submenu[$i]);
         if(!empty($action)) {

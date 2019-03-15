@@ -80,17 +80,19 @@
 
         <ul class="sidebar-menu tree" data-widget="tree">
           <li class="header"><span><span>Home</span></span></li>
-          <?php if(Yii::$app->user->identity->role == 1) { ?>
-            <li class="treeview">
-              <a href="#">
-                <i class="fa fa-users"></i> <span>Admin</span>
-                <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>
-              </a>
-              <ul class="treeview-menu" style="display: none;">
-                <li><a href="/indoworker/backend/web/index.php/admin-role"><i class="fa fa-tasks"></i>  <span>Admin Role</span></a></li>
-                <li><a href="/indoworker/backend/web/index.php/user-admin"><i class="fa fa-user"></i>  <span>Admin User</span></a></li>
-              </ul>
-            </li>
+          <?php if(!empty(Yii::$app->user->identity)) { ?>
+            <?php if(Yii::$app->user->identity->role == 1) { ?>
+              <li class="treeview">
+                <a href="#">
+                  <i class="fa fa-users"></i> <span>Admin</span>
+                  <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>
+                </a>
+                <ul class="treeview-menu" style="display: none;">
+                  <li><a href="/indoworker/backend/web/index.php/admin-role"><i class="fa fa-tasks"></i>  <span>Admin Role</span></a></li>
+                  <li><a href="/indoworker/backend/web/index.php/user-admin"><i class="fa fa-user"></i>  <span>Admin User</span></a></li>
+                </ul>
+              </li>
+            <?php ;} ?>
           <?php ;} ?>
           <?php if(in_array('transaction',$menuAccess)) { ?>
           <li class="treeview">

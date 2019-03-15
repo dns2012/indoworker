@@ -8,6 +8,7 @@ use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\filters\AccessControl;
 
 /**
  * UserAdminController implements the CRUD actions for UserAdmin model.
@@ -17,17 +18,28 @@ class UserAdminController extends Controller
     /**
      * {@inheritdoc}
      */
-    public function behaviors()
-    {
-        return [
-            'verbs' => [
-                'class' => VerbFilter::className(),
-                'actions' => [
-                    'delete' => ['POST'],
-                ],
-            ],
-        ];
-    }
+     public function behaviors()
+     {
+         return [
+           'allow' => [
+             'class'=>AccessControl::className(),
+             'only'=>['create','update','delete','view','index'],
+             'rules'=>[
+               [
+                 'allow'=>true,
+                 'roles'=>['@'],
+               ],
+             ],
+           ],
+
+             'verbs' => [
+                 'class' => VerbFilter::className(),
+                 'actions' => [
+                     'delete' => ['POST'],
+                 ],
+             ],
+         ];
+     }
 
     /**
      * Lists all UserAdmin models.

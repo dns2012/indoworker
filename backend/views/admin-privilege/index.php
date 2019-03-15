@@ -10,10 +10,13 @@ use yii\helpers\Url;
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
 $this->title = 'Admin Privilege';
-$this->params['breadcrumbs'][] = $this->title;
+$this->params['breadcrumbs'][] = $rolename['name'];
 ?>
 <div class="bio-unread-index">
   <div class="row">
+    <div class="col-md-12" style="text-align: center">
+      <h2><?=$rolename['name'];?></h2>
+    </div>
     <div class="col-md-12">
       <input type="checkbox" name="" value="" id="checkall" value="1"> CHECK ALL
     </div>
@@ -165,17 +168,31 @@ $this->params['breadcrumbs'][] = $this->title;
                     <th>Reject</th>
                     <th>Accept</th>
                     <th>Accept Other Job Type</th>
+                    <th>Country</th>
                   </thead>
                   <tbody>
                     <?php for($jt=0;$jt<$count_job_type;$jt++) {
                       $exjt = explode('-', $job_type[$jt]);
                       $valjt = "bio-unread?id=".$exjt[0];
+                      $country_valjt = "country-".$valjt;
                     ?>
                     <tr>
                       <td><input type="checkbox" class="bio-unread" name="submenu[]" value="<?=$valjt?>" <?=(!empty($menu))?(in_array($valjt,$menu))?"checked":"":""?>> <?=$exjt[1]?></td>
                       <td><input type="checkbox" class="bio-unread" name="<?=$valjt?>[]" value="reject" <?=(!empty($privilege[$valjt]))?(in_array('reject',$privilege[$valjt]))?"checked":"":""?>></td>
                       <td><input type="checkbox" class="bio-unread" name="<?=$valjt?>[]" value="accept" <?=(!empty($privilege[$valjt]))?(in_array('accept',$privilege[$valjt]))?"checked":"":""?>></td>
                       <td><input type="checkbox" class="bio-unread" name="<?=$valjt?>[]" value="acceptojt" <?=(!empty($privilege[$valjt]))?(in_array('acceptojt',$privilege[$valjt]))?"checked":"":""?>></td>
+                      <td>
+                        <select class="form-control" name="<?=$country_valjt?>">
+                          <option selected value="ALL">ALL</option>
+                          <?php for($ct=0;$ct<$count_country;$ct++) {
+                            $excountry = explode('-', $country[$ct]);
+                            $country_id = $excountry[0];
+                            $country_name = $excountry[1];
+                          ?>
+                            <option value="<?=$country_id?>" <?=(!empty($pricountry[$valjt]))?($pricountry[$valjt]==$country_id)?"selected":"":""?>><?=$country_name?></option>
+                          <?php ;} ?>
+                        </select>
+                      </td>
                     </tr>
                     <?php ;} ?>
                   </tbody>
@@ -193,14 +210,28 @@ $this->params['breadcrumbs'][] = $this->title;
                 <table class="table table-bordered">
                   <thead>
                     <th>Menu</th>
+                    <th>Country</th>
                   </thead>
                   <tbody>
                     <?php for($jt=0;$jt<$count_job_type;$jt++) {
                       $exjt = explode('-', $job_type[$jt]);
                       $valjt = "bio-rejected?id=".$exjt[0];
+                      $country_valjt = "country-".$valjt;
                     ?>
                     <tr>
                       <td><input type="checkbox" class="bio-rejected" name="submenu[]" value="<?=$valjt?>" <?=(!empty($menu))?(in_array($valjt,$menu))?"checked":"":""?>> <?=$exjt[1]?></td>
+                      <td>
+                        <select class="form-control" name="<?=$country_valjt?>">
+                          <option selected value="ALL">ALL</option>
+                          <?php for($ct=0;$ct<$count_country;$ct++) {
+                            $excountry = explode('-', $country[$ct]);
+                            $country_id = $excountry[0];
+                            $country_name = $excountry[1];
+                          ?>
+                            <option value="<?=$country_id?>" <?=(!empty($pricountry[$valjt]))?($pricountry[$valjt]==$country_id)?"selected":"":""?>><?=$country_name?></option>
+                          <?php ;} ?>
+                        </select>
+                      </td>
                     </tr>
                     <?php ;} ?>
                   </tbody>
@@ -219,15 +250,29 @@ $this->params['breadcrumbs'][] = $this->title;
                   <thead>
                     <th>Menu</th>
                     <th>Move to Trash</th>
+                    <th>Country</th>
                   </thead>
                   <tbody>
                     <?php for($jt=0;$jt<$count_job_type;$jt++) {
                       $exjt = explode('-', $job_type[$jt]);
                       $valjt = "bio-job-confirmed?id=".$exjt[0];
+                      $country_valjt = "country-".$valjt;
                     ?>
                     <tr>
                       <td><input type="checkbox" class="bio-job-confirmed" name="submenu[]" value="<?=$valjt?>" <?=(!empty($menu))?(in_array($valjt,$menu))?"checked":"":""?>> <?=$exjt[1]?></td>
                       <td><input type="checkbox" class="bio-job-confirmed" name="<?=$valjt?>[]" value="movetotrash" <?=(!empty($privilege[$valjt]))?(in_array('movetotrash',$privilege[$valjt]))?"checked":"":""?>></td>
+                      <td>
+                        <select class="form-control" name="<?=$country_valjt?>">
+                          <option selected value="ALL">ALL</option>
+                          <?php for($ct=0;$ct<$count_country;$ct++) {
+                            $excountry = explode('-', $country[$ct]);
+                            $country_id = $excountry[0];
+                            $country_name = $excountry[1];
+                          ?>
+                            <option value="<?=$country_id?>" <?=(!empty($pricountry[$valjt]))?($pricountry[$valjt]==$country_id)?"selected":"":""?>><?=$country_name?></option>
+                          <?php ;} ?>
+                        </select>
+                      </td>
                     </tr>
                     <?php ;} ?>
                   </tbody>
@@ -246,15 +291,29 @@ $this->params['breadcrumbs'][] = $this->title;
                   <thead>
                     <th>Menu</th>
                     <th>Recall</th>
+                    <th>Country</th>
                   </thead>
                   <tbody>
                     <?php for($jt=0;$jt<$count_job_type;$jt++) {
                       $exjt = explode('-', $job_type[$jt]);
                       $valjt = "bio-trash?id=".$exjt[0];
+                      $country_valjt = "country-".$valjt;
                     ?>
                     <tr>
                       <td><input type="checkbox" class="bio-trash" name="submenu[]" value="<?=$valjt?>" <?=(!empty($menu))?(in_array($valjt,$menu))?"checked":"":""?>> <?=$exjt[1]?></td>
                       <td><input type="checkbox" class="bio-trash" name="<?=$valjt?>[]" value="recall" <?=(!empty($privilege[$valjt]))?(in_array('recall',$privilege[$valjt]))?"checked":"":""?>></td>
+                      <td>
+                        <select class="form-control" name="<?=$country_valjt?>">
+                          <option selected value="ALL">ALL</option>
+                          <?php for($ct=0;$ct<$count_country;$ct++) {
+                            $excountry = explode('-', $country[$ct]);
+                            $country_id = $excountry[0];
+                            $country_name = $excountry[1];
+                          ?>
+                            <option value="<?=$country_id?>" <?=(!empty($pricountry[$valjt]))?($pricountry[$valjt]==$country_id)?"selected":"":""?>><?=$country_name?></option>
+                          <?php ;} ?>
+                        </select>
+                      </td>
                     </tr>
                     <?php ;} ?>
                   </tbody>
@@ -272,14 +331,28 @@ $this->params['breadcrumbs'][] = $this->title;
                 <table class="table table-bordered">
                   <thead>
                     <th>Menu</th>
+                    <th>Country</th>
                   </thead>
                   <tbody>
                     <?php for($jt=0;$jt<$count_job_type;$jt++) {
                       $exjt = explode('-', $job_type[$jt]);
                       $valjt = "bio-recall?id=".$exjt[0];
+                      $country_valjt = "country-".$valjt;
                     ?>
                     <tr>
                       <td><input type="checkbox" class="bio-recall" name="submenu[]" value="<?=$valjt?>" <?=(!empty($menu))?(in_array($valjt,$menu))?"checked":"":""?>> <?=$exjt[1]?></td>
+                      <td>
+                        <select class="form-control" name="<?=$country_valjt?>">
+                          <option selected value="ALL">ALL</option>
+                          <?php for($ct=0;$ct<$count_country;$ct++) {
+                            $excountry = explode('-', $country[$ct]);
+                            $country_id = $excountry[0];
+                            $country_name = $excountry[1];
+                          ?>
+                            <option value="<?=$country_id?>" <?=(!empty($pricountry[$valjt]))?($pricountry[$valjt]==$country_id)?"selected":"":""?>><?=$country_name?></option>
+                          <?php ;} ?>
+                        </select>
+                      </td>
                     </tr>
                     <?php ;} ?>
                   </tbody>
